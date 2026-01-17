@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../src/prisma/generated/master"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("MASTER_DATABASE_URL")
+}
+
+model Tenant {
+  id        String   @id @default(uuid()) @db.Uuid
+  slug      String   @unique
+  domain    String?  @unique
+  dbUrl     String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
