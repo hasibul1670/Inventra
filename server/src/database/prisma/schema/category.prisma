@@ -1,0 +1,16 @@
+model Category {
+  id          String    @id @default(cuid())
+  categoryId  String    @unique @default(dbgenerated("'cat-' || lpad(nextval('category_id_seq')::text, 5, '0')")) @map("category_id")
+  name        String    @unique
+  description String?
+  sortOrder   Int       @default(0)
+  isActive    Boolean   @default(true)
+  createdById String?
+  updatedById String?
+  deletedById String?
+  createdBy   User?     @relation("CategoryCreatedBy", fields: [createdById], references: [id])
+  updatedBy   User?     @relation("CategoryUpdatedBy", fields: [updatedById], references: [id])
+  deletedBy   User?     @relation("CategoryDeletedBy", fields: [deletedById], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}

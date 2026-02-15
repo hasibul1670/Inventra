@@ -5,7 +5,7 @@ Build a secure, maintainable inventory platform for one client with one shared a
 
 ## Scope
 - Identity and access management
-- Catalog management
+- Category management
 - Warehouse management
 - Inventory tracking
 - Orders and billing

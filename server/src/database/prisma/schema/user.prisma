@@ -1,0 +1,10 @@
+model User {
+  id                String     @id @default(cuid())
+  email             String     @unique
+  name              String?
+  categoriesCreated Category[] @relation("CategoryCreatedBy")
+  categoriesUpdated Category[] @relation("CategoryUpdatedBy")
+  categoriesDeleted Category[] @relation("CategoryDeletedBy")
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+}

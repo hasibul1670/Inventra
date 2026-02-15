@@ -61,14 +61,14 @@ src/
       controllers/
         identity.controller.ts
 
-  catalog/
-    catalog.module.ts
+  category/
+    category.module.ts
     application/
       services/
-        catalog.service.ts
+        category.service.ts
     presentation/
       controllers/
-        catalog.controller.ts
+        category.controller.ts
 
   inventory/
     inventory.module.ts
