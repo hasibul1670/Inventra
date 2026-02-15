@@ -1,56 +1,25 @@
-import { ApiModule } from '@api/api.module';
-import { AuthController } from '@api/controllers/auth.controller';
-import { CategoryController } from '@api/controllers/category.controller';
-import { HelloController } from '@api/controllers/hello.controller';
-import { ProfileController } from '@api/controllers/profile.controller';
-import { ApplicationModule } from '@application/application.module';
-import { ApiExceptionFilter } from '@application/filters/api-exception.filter';
-import { ResponseInterceptor } from '@application/interceptors/response.interceptor';
-import { LoggerMiddleware } from '@application/middlewere/logger.middleware';
-import { ResponseService } from '@application/services/response.service';
-import { HealthController } from '@infrastructure/health/health.controller';
-import { TerminusOptionsService } from '@infrastructure/health/terminus-options.check';
-import { LoggerModule } from '@infrastructure/logger/logger.module';
-import { HttpModule } from '@nestjs/axios';
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
-import { TerminusModule } from '@nestjs/terminus';
-import { ThrottlerModule } from '@nestjs/throttler';
-import { PrometheusModule } from '@willsoto/nestjs-prometheus';
+import { Module } from '@nestjs/common';
+import { IdentityModule } from './identity/identity.module';
+import { InventoryModule } from './inventory/inventory.module';
+import { CatalogModule } from './catalog/catalog.module';
+import { WarehouseModule } from './warehouse/warehouse.module';
+import { OrdersModule } from './orders/orders.module';
+import { BillingModule } from './billing/billing.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { AuditModule } from './audit/audit.module';
+import { IntegrationsModule } from './integrations/integrations.module';
 
 @Module({
   imports: [
-    ThrottlerModule.forRoot([
-      {
-        ttl: 60000,
-        limit: 100,
-      },
-    ]),
-    ApiModule,
-    ApplicationModule,
-    TerminusModule,
-    HttpModule,
-    PrometheusModule.register(),
-    LoggerModule,
-  ],
-  controllers: [HelloController, HealthController],
-  providers: [
-    TerminusOptionsService,
-    ResponseService,
-    {
-      provide: APP_FILTER,
-      useClass: ApiExceptionFilter,
-    },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: ResponseInterceptor,
-    },
+    IdentityModule,
+    InventoryModule,
+    CatalogModule,
+    WarehouseModule,
+    OrdersModule,
+    BillingModule,
+    NotificationsModule,
+    AuditModule,
+    IntegrationsModule,
   ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(LoggerMiddleware)
-      .forRoutes(ProfileController, AuthController, CategoryController);
-  }
-}
+export class AppModule {}
